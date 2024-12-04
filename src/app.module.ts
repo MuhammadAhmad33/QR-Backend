@@ -9,7 +9,7 @@ dotenv.config();
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.DB_URI), // Update with your MongoDB connection string
+    MongooseModule.forRoot(process.env.MONGO_URI), // Update with your MongoDB connection string
     AuthModule,
     UserModule,
     TrademarkModule,
