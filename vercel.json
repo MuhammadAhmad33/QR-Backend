@@ -11,10 +11,6 @@
         "src": "/(.*)",
         "dest": "dist/main.js"
       }
-    ],
-    "env": {
-      "DB_URI": "@db_uri",
-      "JWT_SECRET": "@jwt_secret"
-    }
+    ]
   }
   
