@@ -29,6 +29,15 @@ let TrademarkController = class TrademarkController {
         const companyId = user.userId;
         return this.trademarkService.getTrademarksByCompany(companyId);
     }
+    async getTrademarkById(id) {
+        return this.trademarkService.getTrademarkById(id);
+    }
+    async updateTrademark(id, body) {
+        return this.trademarkService.updateTrademark(id, body);
+    }
+    async deleteTrademark(id) {
+        return this.trademarkService.deleteTrademark(id);
+    }
 };
 exports.TrademarkController = TrademarkController;
 __decorate([
@@ -46,6 +55,28 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], TrademarkController.prototype, "getTrademarks", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TrademarkController.prototype, "getTrademarkById", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], TrademarkController.prototype, "updateTrademark", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TrademarkController.prototype, "deleteTrademark", null);
 exports.TrademarkController = TrademarkController = __decorate([
     (0, common_1.Controller)('trademarks'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),

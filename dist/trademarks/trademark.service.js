@@ -26,7 +26,16 @@ let TrademarkService = class TrademarkService {
         return trademark.save();
     }
     async getTrademarksByCompany(companyId) {
-        return this.trademarkModel.find({ companyId });
+        return this.trademarkModel.find({ owner: companyId });
+    }
+    async getTrademarkById(id) {
+        return this.trademarkModel.findById(id);
+    }
+    async updateTrademark(id, data) {
+        return this.trademarkModel.findByIdAndUpdate(id, data, { new: true });
+    }
+    async deleteTrademark(id) {
+        return this.trademarkModel.findByIdAndDelete(id);
     }
 };
 exports.TrademarkService = TrademarkService;
