@@ -14,9 +14,6 @@ export class Company {
   email: string;
 
   @Prop({ required: true })
-  password: string;
-
-  @Prop({ required: true })
   companyWebsite: string;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
