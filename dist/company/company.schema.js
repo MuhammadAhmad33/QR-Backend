@@ -9,31 +9,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserSchema = exports.User = void 0;
+exports.CompanySchema = exports.Company = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const company_schema_1 = require("../company/company.schema");
-let User = class User {
+let Company = class Company {
 };
-exports.User = User;
+exports.Company = Company;
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], Company.prototype, "companyName", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], Company.prototype, "email", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Company.prototype, "password", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Company', required: true }),
-    __metadata("design:type", company_schema_1.Company)
-], User.prototype, "company", void 0);
-exports.User = User = __decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Company.prototype, "companyWebsite", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'User' }] }),
+    __metadata("design:type", Array)
+], Company.prototype, "users", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'Trademark' }] }),
+    __metadata("design:type", Array)
+], Company.prototype, "brands", void 0);
+exports.Company = Company = __decorate([
     (0, mongoose_1.Schema)()
-], User);
-exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
-//# sourceMappingURL=user.schema.js.map
+], Company);
+exports.CompanySchema = mongoose_1.SchemaFactory.createForClass(Company);
+//# sourceMappingURL=company.schema.js.map

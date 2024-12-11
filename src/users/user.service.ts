@@ -2,28 +2,37 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from './user.schema';
-import { Brand} from '../trademarks/trademark.schema';
+import { Company, CompanyDocument } from '../company/company.schema';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Company.name) private companyModel: Model<CompanyDocument>,
   ) {}
 
   async createUser(userData: Partial<User>): Promise<User> {
-    const user = new this.userModel(userData);
+    // Validate the provided company ID
+    const company = await this.companyModel.findById(userData.company);
+    if (!company) {
+      throw new Error('Company not found');
+    }
+
+    // Hash the user's password with a salt round of 10
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+
+    // Create a new user associated with the company
+    const user = new this.userModel({
+      ...userData,
+      password: hashedPassword, // Store the hashed password
+      company: userData.company,
+    });
+
     return user.save();
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.userModel.findOne({ email }).populate('brands').exec();
-  }
-
-  async addBrandToUser(userId: string, brandId: string): Promise<User> {
-    return this.userModel.findByIdAndUpdate(
-      userId,
-      { $push: { brands: new Types.ObjectId(brandId) } },
-      { new: true },
-    ).populate('brands');
+    return this.userModel.findOne({ email }).populate('company').exec();
   }
 }

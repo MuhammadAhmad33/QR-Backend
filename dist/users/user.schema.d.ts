@@ -1,13 +1,11 @@
-import { Document } from 'mongoose';
-import { Types } from 'mongoose';
-import { Brand } from '../trademarks/trademark.schema';
+import { Document, Types } from 'mongoose';
+import { Company } from '../company/company.schema';
 export type UserDocument = User & Document;
 export declare class User {
-    companyName: string;
+    name: string;
     email: string;
     password: string;
-    companyWebsite: string;
-    brands: Brand[];
+    company: Company;
 }
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, Document<unknown, any, User> & User & {
     _id: Types.ObjectId;

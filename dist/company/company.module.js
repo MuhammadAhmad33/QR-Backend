@@ -6,27 +6,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.CompanyModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const auth_module_1 = require("./auth/auth.module");
-const trademark_module_1 = require("./trademarks/trademark.module");
-const user_module_1 = require("./users/user.module");
-const dotenv = require("dotenv");
-const company_module_1 = require("./company/company.module");
-dotenv.config();
-let AppModule = class AppModule {
+const company_schema_1 = require("./company.schema");
+const company_service_1 = require("./company.service");
+const company_controller_1 = require("./company.controller");
+let CompanyModule = class CompanyModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.CompanyModule = CompanyModule;
+exports.CompanyModule = CompanyModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI),
-            auth_module_1.AuthModule,
-            user_module_1.UserModule,
-            trademark_module_1.TrademarkModule,
-            company_module_1.CompanyModule
+            mongoose_1.MongooseModule.forFeature([{ name: company_schema_1.Company.name, schema: company_schema_1.CompanySchema }]),
         ],
+        providers: [company_service_1.CompanyService],
+        controllers: [company_controller_1.CompanyController],
+        exports: [mongoose_1.MongooseModule],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], CompanyModule);
+//# sourceMappingURL=company.module.js.map

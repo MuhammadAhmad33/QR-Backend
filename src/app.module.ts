@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { TrademarkModule } from './trademarks/trademark.module';
 import { UserModule } from './users/user.module';
 import * as dotenv from 'dotenv'; // Load dotenv here as well, if necessary
+import { CompanyModule } from './company/company.module';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ dotenv.config();
     AuthModule,
     UserModule,
     TrademarkModule,
+    CompanyModule
   ],
 })
 export class AppModule {}

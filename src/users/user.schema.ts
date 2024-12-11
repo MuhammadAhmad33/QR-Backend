@@ -1,14 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Types } from 'mongoose';
-import { Brand} from '../trademarks/trademark.schema';
+import { Document, Types } from 'mongoose';
+import { Company } from '../company/company.schema';
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
   @Prop({ required: true })
-  companyName: string;
+  name: string;
 
   @Prop({ required: true, unique: true })
   email: string;
@@ -16,11 +15,8 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ required: true })
-  companyWebsite: string;
-
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Trademark' }] })
-  brands: Brand[]; // A user can have many trademarks (brands)
+  @Prop({ type: Types.ObjectId, ref: 'Company', required: true })
+  company: Company; // A user belongs to one company
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

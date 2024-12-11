@@ -17,25 +17,36 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const user_schema_1 = require("./user.schema");
+const company_schema_1 = require("../company/company.schema");
+const bcrypt = require("bcryptjs");
 let UserService = class UserService {
-    constructor(userModel) {
+    constructor(userModel, companyModel) {
         this.userModel = userModel;
+        this.companyModel = companyModel;
     }
     async createUser(userData) {
-        const user = new this.userModel(userData);
+        const company = await this.companyModel.findById(userData.company);
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        const hashedPassword = await bcrypt.hash(userData.password, 10);
+        const user = new this.userModel({
+            ...userData,
+            password: hashedPassword,
+            company: userData.company,
+        });
         return user.save();
     }
     async findByEmail(email) {
-        return this.userModel.findOne({ email }).populate('brands').exec();
-    }
-    async addBrandToUser(userId, brandId) {
-        return this.userModel.findByIdAndUpdate(userId, { $push: { brands: new mongoose_2.Types.ObjectId(brandId) } }, { new: true }).populate('brands');
+        return this.userModel.findOne({ email }).populate('company').exec();
     }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(company_schema_1.Company.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], UserService);
 //# sourceMappingURL=user.service.js.map
