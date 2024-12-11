@@ -10,9 +10,6 @@ export class Company {
   @Prop({ required: true })
   companyName: string;
 
-  @Prop({ required: true, unique: true })
-  email: string;
-
   @Prop({ required: true })
   companyWebsite: string;
 

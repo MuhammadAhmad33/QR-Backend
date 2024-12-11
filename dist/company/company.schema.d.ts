@@ -4,7 +4,6 @@ import { Brand } from '../trademarks/trademark.schema';
 export type CompanyDocument = Company & Document;
 export declare class Company {
     companyName: string;
-    email: string;
     companyWebsite: string;
     users: User[];
     brands: Brand[];
