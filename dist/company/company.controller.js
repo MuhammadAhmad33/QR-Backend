@@ -43,6 +43,14 @@ let CompanyController = class CompanyController {
             throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
         }
     }
+    async getUsersOfCompany(companyId) {
+        try {
+            return await this.companyService.getUsersOfCompany(companyId);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
     async findCompanyByEmail(email) {
         try {
             return await this.companyService.findCompanyByEmail(email);
@@ -76,6 +84,13 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], CompanyController.prototype, "addBrandToCompany", null);
+__decorate([
+    (0, common_1.Get)(':companyId/users'),
+    __param(0, (0, common_1.Param)('companyId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], CompanyController.prototype, "getUsersOfCompany", null);
 __decorate([
     (0, common_1.Get)('find-by-email'),
     __param(0, (0, common_1.Body)('email')),

@@ -7,4 +7,5 @@ export declare class CompanyService {
     addUserToCompany(companyId: string, userId: string): Promise<Company>;
     addBrandToCompany(companyId: string, brandId: string): Promise<Company>;
     findCompanyByEmail(email: string): Promise<Company | null>;
+    getUsersOfCompany(companyId: string): Promise<any[]>;
 }

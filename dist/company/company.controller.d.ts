@@ -6,5 +6,6 @@ export declare class CompanyController {
     createCompany(companyData: Partial<Company>): Promise<Company>;
     addUserToCompany(companyId: string, userId: string): Promise<Company>;
     addBrandToCompany(companyId: string, brandId: string): Promise<Company>;
+    getUsersOfCompany(companyId: string): Promise<any[]>;
     findCompanyByEmail(email: string): Promise<Company | null>;
 }

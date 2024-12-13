@@ -42,6 +42,16 @@ export class CompanyController {
     }
   }
 
+  // Endpoint to get all users of a company
+@Get(':companyId/users')
+async getUsersOfCompany(@Param('companyId') companyId: string): Promise<any[]> {
+  try {
+    return await this.companyService.getUsersOfCompany(companyId);
+  } catch (error) {
+    throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+  }
+}
+
   // Endpoint to get company details by email
   @Get('find-by-email')
   async findCompanyByEmail(@Body('email') email: string): Promise<Company | null> {

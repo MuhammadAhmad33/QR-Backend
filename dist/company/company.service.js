@@ -34,6 +34,16 @@ let CompanyService = class CompanyService {
     async findCompanyByEmail(email) {
         return this.companyModel.findOne({ email }).populate(['users', 'brands']).exec();
     }
+    async getUsersOfCompany(companyId) {
+        const company = await this.companyModel.findById(companyId).populate({
+            path: 'users',
+            model: 'User',
+        });
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        return company.users;
+    }
 };
 exports.CompanyService = CompanyService;
 exports.CompanyService = CompanyService = __decorate([

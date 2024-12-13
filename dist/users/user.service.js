@@ -35,7 +35,9 @@ let UserService = class UserService {
             password: hashedPassword,
             company: userData.company,
         });
-        return user.save();
+        const createdUser = await user.save();
+        await this.companyModel.findByIdAndUpdate(userData.company, { $push: { users: createdUser._id } }, { new: true });
+        return createdUser;
     }
     async findByEmail(email) {
         return this.userModel.findOne({ email }).populate('company').exec();
