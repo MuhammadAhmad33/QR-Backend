@@ -44,4 +44,15 @@ export class UserService {
   async findByEmail(email: string): Promise<User | null> {
     return this.userModel.findOne({ email }).populate('company').exec();
   }
+
+  async getUsers(userId): Promise<User[]> {
+    const user = await this.userModel.findById(userId).populate('company').exec();
+    const companyId = user.company['_id'].toString();
+    return this.userModel.find({ company: companyId }).exec();
+  }
+
+  async getCompanyByUser(userId: string): Promise<Company> {
+    const user = await this.userModel.findById(userId).populate('company').exec();
+    return user.company;
+  }
 }
