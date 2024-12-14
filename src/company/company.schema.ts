@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { User } from '../users/user.schema';
 import { Brand } from '../trademarks/trademark.schema';
+import { Url } from 'src/url/url.schema';
 
 export type CompanyDocument = Company & Document;
 
@@ -18,6 +19,9 @@ export class Company {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Trademark' }] })
   brands: Brand[]; // A company can own many trademarks (brands)
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Url' }] })
+  urls: Url[]; // A company can have many urls
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
