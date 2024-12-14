@@ -71,6 +71,10 @@ export class AuthService {
         throw new UnauthorizedException('Invalid email or password');
       }
 
+      if (!user.isActive) {
+        throw new UnauthorizedException('User is not active');
+      }
+
       // Generate JWT token
       const payload = { email: user.email, sub: user._id };
       const token = this.jwtService.sign(payload);

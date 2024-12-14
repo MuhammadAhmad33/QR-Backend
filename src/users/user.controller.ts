@@ -49,6 +49,15 @@ export class UserController {
     return this.userService.getUsers(userId);
   }
 
+  @Get(':id')
+  async getUser(@Param('id') userId: string, @GetUser() currentUser: any): Promise<User> {
+    try {
+      return await this.userService.getUser(userId);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   @Put(':id') // Update user details by ID
   async updateUser(
     @Param('id') userId: string,

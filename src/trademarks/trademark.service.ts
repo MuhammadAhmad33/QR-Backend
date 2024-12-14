@@ -16,6 +16,7 @@ export class TrademarkService {
   }
 
   async getTrademarksByCompany(companyId: string) {
+    console.log('Company:', companyId);
     return this.trademarkModel.find({ owner: companyId }); // Assuming owner is used as companyId
   }
 

@@ -3,25 +3,26 @@ import { Controller, Post, Get, Body, Param, Delete, Put, UseGuards } from '@nes
 import { TrademarkService } from './trademark.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { GetUser } from '../auth/get-user.decorator';
+import { UserService } from 'src/users/user.service';
 
 @Controller('trademarks')
 @UseGuards(JwtAuthGuard) // Protect all routes with JWT authentication
 export class TrademarkController {
-  constructor(private trademarkService: TrademarkService) {}
+  constructor(private trademarkService: TrademarkService, private userService: UserService) {}
 
   @Post('create')
   async createTrademark(
     @Body() body: { name: string; code: string },
     @GetUser() user: any,
   ) {
-    const owner = user.userId; 
-    return this.trademarkService.createTrademark({ ...body, owner });
+    const owner = await this.userService.getCompanyByUser(user.userId);
+    return this.trademarkService.createTrademark({ ...body, owner: owner['_id'].toString() });
   }
 
   @Get()
   async getTrademarks(@GetUser() user: any) {
-    const companyId = user.userId; // Use userId directly as companyId
-    return this.trademarkService.getTrademarksByCompany(companyId);
+    const company = await this.userService.getCompanyByUser(user.userId);
+    return this.trademarkService.getTrademarksByCompany(company['_id'].toString());
   }
 
   @Get(':id')

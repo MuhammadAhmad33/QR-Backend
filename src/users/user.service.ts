@@ -94,4 +94,8 @@ export class UserService {
       { new: true },
     );
   }
+
+  getUser(userId: string): Promise<User> {
+    return this.userModel.findById(userId).exec();
+  }
 }

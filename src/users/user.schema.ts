@@ -15,6 +15,15 @@ export class User {
   @Prop({ required: true })
   password: string;
 
+  @Prop({ default: false })
+  isOwner: boolean; // Virtual property, not stored in the database
+
+  @Prop({ default: true })
+  isActive: boolean; // Virtual property, not stored in the database
+
+  @Prop({ default: Date.now })
+  createdAt: Date;
+
   @Prop({ type: Types.ObjectId, ref: 'Company', required: true })
   company: Company; // A user belongs to one company
 }
