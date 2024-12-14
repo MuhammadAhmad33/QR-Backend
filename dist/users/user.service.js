@@ -39,8 +39,46 @@ let UserService = class UserService {
         await this.companyModel.findByIdAndUpdate(userData.company, { $push: { users: createdUser._id } }, { new: true });
         return createdUser;
     }
-    async findByEmail(email) {
-        return this.userModel.findOne({ email }).populate('company').exec();
+    async getUsers(userId) {
+        const user = await this.userModel.findById(userId).populate('company').exec();
+        if (!user || !user.company) {
+            throw new Error('User or company not found');
+        }
+        const companyId = user.company['_id'].toString();
+        return this.userModel.find({ company: companyId }).exec();
+    }
+    async getCompanyByUser(userId) {
+        const user = await this.userModel.findById(userId).populate('company').exec();
+        if (!user) {
+            throw new Error('User not found');
+        }
+        if (!user.company) {
+            throw new Error('User does not belong to any company');
+        }
+        return user.company;
+    }
+    async updateUser(currentUserId, userId, updateData) {
+        const currentUser = await this.userModel.findById(currentUserId).populate('company').exec();
+        const targetUser = await this.userModel.findById(userId).populate('company').exec();
+        if (!currentUser || !targetUser) {
+            throw new Error('Current user or target user not found');
+        }
+        if (currentUser.company['_id'].toString() !== targetUser.company['_id'].toString()) {
+            throw new Error('You do not have permission to update this user');
+        }
+        return this.userModel.findByIdAndUpdate(userId, updateData, { new: true }).exec();
+    }
+    async deleteUser(currentUserId, userId) {
+        const currentUser = await this.userModel.findById(currentUserId).populate('company').exec();
+        const targetUser = await this.userModel.findById(userId).populate('company').exec();
+        if (!currentUser || !targetUser) {
+            throw new Error('Current user or target user not found');
+        }
+        if (currentUser.company['_id'].toString() !== targetUser.company['_id'].toString()) {
+            throw new Error('You do not have permission to delete this user');
+        }
+        await this.userModel.findByIdAndDelete(userId).exec();
+        await this.companyModel.findByIdAndUpdate(targetUser.company['_id'], { $pull: { users: targetUser._id } }, { new: true });
     }
 };
 exports.UserService = UserService;

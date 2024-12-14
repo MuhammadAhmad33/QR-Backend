@@ -15,13 +15,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const get_user_decorator_1 = require("../auth/get-user.decorator");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    async createUser(userData) {
+    async create(userData, currentUser) {
         try {
+            const userId = currentUser.userId;
+            console.log('Fetching company for user ID:', userId);
+            const company = await this.userService.getCompanyByUser(userId);
+            if (!company) {
+                throw new Error('User does not belong to a company');
+            }
+            userData.company = company['_id'].toString();
             return await this.userService.createUser(userData);
+        }
+        catch (error) {
+            console.error('Error in create method:', error);
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async getUsers(user) {
+        const userId = user.userId;
+        return this.userService.getUsers(userId);
+    }
+    async updateUser(userId, updateData, currentUser) {
+        try {
+            const userIdFromToken = currentUser.userId;
+            return await this.userService.updateUser(userIdFromToken, userId, updateData);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async deleteUser(userId, currentUser) {
+        try {
+            const userIdFromToken = currentUser.userId;
+            await this.userService.deleteUser(userIdFromToken, userId);
+            return { message: 'User deleted successfully' };
         }
         catch (error) {
             throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
@@ -30,14 +63,40 @@ let UserController = class UserController {
 };
 exports.UserController = UserController;
 __decorate([
-    (0, common_1.Post)('create'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, get_user_decorator_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    __param(0, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "createUser", null);
+], UserController.prototype, "getUsers", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateUser", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, get_user_decorator_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);
 //# sourceMappingURL=user.controller.js.map

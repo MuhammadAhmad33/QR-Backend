@@ -46,6 +46,4 @@ export class CompanyService {
   
     return company.users;
   }  
-  
-  
 }
