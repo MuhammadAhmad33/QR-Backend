@@ -1,7 +1,7 @@
 import { Document, Types } from 'mongoose';
 import { User } from '../users/user.schema';
 import { Brand } from '../trademarks/trademark.schema';
-import { Url } from 'src/url/url.schema';
+import { Url } from '../url/url.schema';
 export type CompanyDocument = Company & Document;
 export declare class Company {
     companyName: string;

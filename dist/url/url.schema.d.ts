@@ -4,6 +4,7 @@ export type UrlDocument = Url & Document;
 export declare class Url {
     fullUrl: string;
     tinyUrl: string;
+    tiny: string;
     owner: User;
 }
 export declare const UrlSchema: import("mongoose").Schema<Url, import("mongoose").Model<Url, any, any, any, Document<unknown, any, Url> & Url & {

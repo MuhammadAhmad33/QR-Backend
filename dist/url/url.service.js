@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const url_schema_1 = require("./url.schema");
 const mongoose_2 = require("mongoose");
+const uuid_1 = require("uuid");
 let UrlService = class UrlService {
     constructor(urlModel) {
         this.urlModel = urlModel;
@@ -28,6 +29,9 @@ let UrlService = class UrlService {
         const url = new this.urlModel(data);
         return url.save();
     }
+    getUrlByTinyUrl(tiny) {
+        return this.urlModel.findOne({ tiny });
+    }
     getUrlById(id) {
         return this.urlModel.findById(id);
     }
@@ -36,6 +40,9 @@ let UrlService = class UrlService {
     }
     deleteUrl(id) {
         return this.urlModel.findByIdAndDelete(id);
+    }
+    generateTinyUrl() {
+        return (0, uuid_1.v4)();
     }
 };
 exports.UrlService = UrlService;

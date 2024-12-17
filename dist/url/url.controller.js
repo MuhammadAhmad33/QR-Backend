@@ -28,9 +28,15 @@ let UrlController = class UrlController {
         return this.urlService.getUrls(company['_id'].toString());
     }
     async getUrlById(id) {
-        return this.urlService.getUrlById(id);
+        return this.urlService.getUrlByTinyUrl(id);
     }
     async createUrl(data, user) {
+        if (!data.fullUrl.startsWith('https://') && !data.fullUrl.startsWith('http://')) {
+            data.fullUrl = `https://${data.fullUrl}`;
+        }
+        const tiny = this.urlService.generateTinyUrl();
+        data.tinyUrl = `https://qr-sass-frontend.vercel.app/label/${tiny}`;
+        data.tiny = tiny;
         const owner = await this.userService.getCompanyByUser(user.userId);
         return this.urlService.createUrl({ ...data, owner: owner['_id'].toString() });
     }

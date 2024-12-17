@@ -17,6 +17,7 @@ export declare class UrlController {
     createUrl(data: {
         fullUrl: string;
         tinyUrl: string;
+        tiny: string;
     }, user: any): Promise<import("mongoose").Document<unknown, {}, import("./url.schema").UrlDocument> & import("./url.schema").Url & import("mongoose").Document<unknown, any, any> & Required<{
         _id: unknown;
     }> & {

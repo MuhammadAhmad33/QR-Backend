@@ -9,31 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UrlSchema = exports.Url = void 0;
+exports.LabelSchema = exports.Label = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const user_schema_1 = require("../users/user.schema");
-let Url = class Url {
+const trademark_schema_1 = require("../trademarks/trademark.schema");
+let Label = class Label {
 };
-exports.Url = Url;
+exports.Label = Label;
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Url.prototype, "fullUrl", void 0);
+], Label.prototype, "name", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Url.prototype, "tinyUrl", void 0);
+], Label.prototype, "description", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Url.prototype, "tiny", void 0);
+], Label.prototype, "image", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', required: true }),
-    __metadata("design:type", user_schema_1.User)
-], Url.prototype, "owner", void 0);
-exports.Url = Url = __decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Brand', required: true }),
+    __metadata("design:type", trademark_schema_1.Brand)
+], Label.prototype, "brand", void 0);
+exports.Label = Label = __decorate([
     (0, mongoose_1.Schema)()
-], Url);
-exports.UrlSchema = mongoose_1.SchemaFactory.createForClass(Url);
-//# sourceMappingURL=url.schema.js.map
+], Label);
+exports.LabelSchema = mongoose_1.SchemaFactory.createForClass(Label);
+//# sourceMappingURL=label.schema.js.map

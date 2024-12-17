@@ -21,6 +21,15 @@ export declare class UrlService {
     }> & {
         __v: number;
     }>;
+    getUrlByTinyUrl(tiny: string): import("mongoose").Query<import("mongoose").Document<unknown, {}, UrlDocument> & Url & import("mongoose").Document<unknown, any, any> & Required<{
+        _id: unknown;
+    }> & {
+        __v: number;
+    }, import("mongoose").Document<unknown, {}, UrlDocument> & Url & import("mongoose").Document<unknown, any, any> & Required<{
+        _id: unknown;
+    }> & {
+        __v: number;
+    }, {}, UrlDocument, "findOne", {}>;
     getUrlById(id: string): import("mongoose").Query<import("mongoose").Document<unknown, {}, UrlDocument> & Url & import("mongoose").Document<unknown, any, any> & Required<{
         _id: unknown;
     }> & {
@@ -51,4 +60,5 @@ export declare class UrlService {
     }> & {
         __v: number;
     }, {}, UrlDocument, "findOneAndDelete", {}>;
+    generateTinyUrl(): string;
 }
