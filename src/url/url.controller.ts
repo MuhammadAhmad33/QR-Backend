@@ -28,7 +28,7 @@ export class UrlController {
         @Body() data: { fullUrl: string; tinyUrl: string },
         @GetUser() user: any,
     ) {
-        data.tinyUrl = `https://qr-sass-frontend.vercel.app/labels/${this.urlService.generateTinyUrl()}`;
+        data.tinyUrl = `https://qr-sass-frontend.vercel.app/label/${this.urlService.generateTinyUrl()}`;
         const owner = await this.userService.getCompanyByUser(user.userId);
         return this.urlService.createUrl({...data, owner: owner['_id'].toString()});
     }
