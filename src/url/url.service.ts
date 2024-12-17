@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Url, UrlDocument } from './url.schema';
 import { Model } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UrlService {
@@ -28,5 +29,9 @@ export class UrlService {
     
     deleteUrl(id: string) {
         return this.urlModel.findByIdAndDelete(id);
+    }
+
+    generateTinyUrl() {
+        return uuidv4();
     }
 }
