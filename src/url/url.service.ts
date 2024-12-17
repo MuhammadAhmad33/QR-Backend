@@ -19,6 +19,10 @@ export class UrlService {
         return url.save();
     }
 
+    getUrlByTinyUrl(tiny: string) {
+        return this.urlModel.findOne({ tiny });
+    }
+
     getUrlById(id: string) {
         return this.urlModel.findById(id);
     }

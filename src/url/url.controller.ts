@@ -20,15 +20,20 @@ export class UrlController {
 
     @Get(':id')
     async getUrlById(@Param('id') id: string) {
-        return this.urlService.getUrlById(id);
+        return this.urlService.getUrlByTinyUrl(id);
     }
 
     @Post()
     async createUrl(
-        @Body() data: { fullUrl: string; tinyUrl: string },
+        @Body() data: { fullUrl: string; tinyUrl: string, tiny: string },
         @GetUser() user: any,
     ) {
-        data.tinyUrl = `https://qr-sass-frontend.vercel.app/label/${this.urlService.generateTinyUrl()}`;
+        if (!data.fullUrl.startsWith('https://') && !data.fullUrl.startsWith('http://')) {
+            data.fullUrl = `https://${data.fullUrl}`;
+        }
+        const tiny = this.urlService.generateTinyUrl();
+        data.tinyUrl = `https://qr-sass-frontend.vercel.app/label/${tiny}`;
+        data.tiny = tiny;
         const owner = await this.userService.getCompanyByUser(user.userId);
         return this.urlService.createUrl({...data, owner: owner['_id'].toString()});
     }

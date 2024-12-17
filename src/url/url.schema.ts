@@ -13,6 +13,9 @@ export class Url {
   @Prop()
   tinyUrl: string;
 
+  @Prop()
+  tiny: string;
+
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   owner: User; // Reference to the User
 }
