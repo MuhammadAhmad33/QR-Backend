@@ -25,7 +25,7 @@ export class UrlService {
     updateUrl(id: string, data: Partial<{ fullUrl: string; tinyUrl: string }>) {
         return this.urlModel.findByIdAndUpdate(id, data, { new: true });
     }
-
+    
     deleteUrl(id: string) {
         return this.urlModel.findByIdAndDelete(id);
     }
