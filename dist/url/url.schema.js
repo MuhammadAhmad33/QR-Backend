@@ -9,34 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CompanySchema = exports.Company = void 0;
+exports.UrlSchema = exports.Url = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-let Company = class Company {
+const user_schema_1 = require("../users/user.schema");
+let Url = class Url {
 };
-exports.Company = Company;
+exports.Url = Url;
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Company.prototype, "companyName", void 0);
+], Url.prototype, "fullUrl", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Company.prototype, "companyWebsite", void 0);
+], Url.prototype, "tinyUrl", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'User' }] }),
-    __metadata("design:type", Array)
-], Company.prototype, "users", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'Trademark' }] }),
-    __metadata("design:type", Array)
-], Company.prototype, "brands", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'Url' }] }),
-    __metadata("design:type", Array)
-], Company.prototype, "urls", void 0);
-exports.Company = Company = __decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', required: true }),
+    __metadata("design:type", user_schema_1.User)
+], Url.prototype, "owner", void 0);
+exports.Url = Url = __decorate([
     (0, mongoose_1.Schema)()
-], Company);
-exports.CompanySchema = mongoose_1.SchemaFactory.createForClass(Company);
-//# sourceMappingURL=company.schema.js.map
+], Url);
+exports.UrlSchema = mongoose_1.SchemaFactory.createForClass(Url);
+//# sourceMappingURL=url.schema.js.map

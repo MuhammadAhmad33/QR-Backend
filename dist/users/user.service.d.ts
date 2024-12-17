@@ -10,4 +10,5 @@ export declare class UserService {
     getCompanyByUser(userId: string): Promise<Company>;
     updateUser(currentUserId: string, userId: string, updateData: Partial<User>): Promise<User>;
     deleteUser(currentUserId: string, userId: string): Promise<void>;
+    getUser(userId: string): Promise<User>;
 }

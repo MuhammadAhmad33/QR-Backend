@@ -12,37 +12,36 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TrademarkService = void 0;
+exports.UrlService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const url_schema_1 = require("./url.schema");
 const mongoose_2 = require("mongoose");
-const trademark_schema_1 = require("./trademark.schema");
-let TrademarkService = class TrademarkService {
-    constructor(trademarkModel) {
-        this.trademarkModel = trademarkModel;
+let UrlService = class UrlService {
+    constructor(urlModel) {
+        this.urlModel = urlModel;
     }
-    async createTrademark(data) {
-        const trademark = new this.trademarkModel(data);
-        return trademark.save();
+    getUrls(companyId) {
+        return this.urlModel.find({ owner: companyId });
     }
-    async getTrademarksByCompany(companyId) {
-        console.log('Company:', companyId);
-        return this.trademarkModel.find({ owner: companyId });
+    createUrl(data) {
+        const url = new this.urlModel(data);
+        return url.save();
     }
-    async getTrademarkById(id) {
-        return this.trademarkModel.findById(id);
+    getUrlById(id) {
+        return this.urlModel.findById(id);
     }
-    async updateTrademark(id, data) {
-        return this.trademarkModel.findByIdAndUpdate(id, data, { new: true });
+    updateUrl(id, data) {
+        return this.urlModel.findByIdAndUpdate(id, data, { new: true });
     }
-    async deleteTrademark(id) {
-        return this.trademarkModel.findByIdAndDelete(id);
+    deleteUrl(id) {
+        return this.urlModel.findByIdAndDelete(id);
     }
 };
-exports.TrademarkService = TrademarkService;
-exports.TrademarkService = TrademarkService = __decorate([
+exports.UrlService = UrlService;
+exports.UrlService = UrlService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(trademark_schema_1.Brand.name)),
+    __param(0, (0, mongoose_1.InjectModel)(url_schema_1.Url.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])
-], TrademarkService);
-//# sourceMappingURL=trademark.service.js.map
+], UrlService);
+//# sourceMappingURL=url.service.js.map

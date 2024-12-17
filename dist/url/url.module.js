@@ -6,24 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TrademarkModule = void 0;
+exports.UrlModule = void 0;
 const common_1 = require("@nestjs/common");
+const url_controller_1 = require("./url.controller");
+const url_service_1 = require("./url.service");
 const mongoose_1 = require("@nestjs/mongoose");
-const trademark_schema_1 = require("./trademark.schema");
-const trademark_service_1 = require("./trademark.service");
-const trademark_controller_1 = require("./trademark.controller");
+const url_schema_1 = require("./url.schema");
 const user_module_1 = require("../users/user.module");
-let TrademarkModule = class TrademarkModule {
+let UrlModule = class UrlModule {
 };
-exports.TrademarkModule = TrademarkModule;
-exports.TrademarkModule = TrademarkModule = __decorate([
+exports.UrlModule = UrlModule;
+exports.UrlModule = UrlModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: trademark_schema_1.Brand.name, schema: trademark_schema_1.BrandSchema }]),
-            user_module_1.UserModule
-        ],
-        providers: [trademark_service_1.TrademarkService],
-        controllers: [trademark_controller_1.TrademarkController],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: url_schema_1.Url.name, schema: url_schema_1.UrlSchema }]), user_module_1.UserModule],
+        controllers: [url_controller_1.UrlController],
+        providers: [url_service_1.UrlService]
     })
-], TrademarkModule);
-//# sourceMappingURL=trademark.module.js.map
+], UrlModule);
+//# sourceMappingURL=url.module.js.map

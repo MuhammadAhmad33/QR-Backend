@@ -41,6 +41,14 @@ let UserController = class UserController {
         const userId = user.userId;
         return this.userService.getUsers(userId);
     }
+    async getUser(userId, currentUser) {
+        try {
+            return await this.userService.getUser(userId);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
     async updateUser(userId, updateData, currentUser) {
         try {
             const userIdFromToken = currentUser.userId;
@@ -77,6 +85,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUsers", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, get_user_decorator_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUser", null);
 __decorate([
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),

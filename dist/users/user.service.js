@@ -80,6 +80,9 @@ let UserService = class UserService {
         await this.userModel.findByIdAndDelete(userId).exec();
         await this.companyModel.findByIdAndUpdate(targetUser.company['_id'], { $pull: { users: targetUser._id } }, { new: true });
     }
+    getUser(userId) {
+        return this.userModel.findById(userId).exec();
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

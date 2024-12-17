@@ -14,6 +14,7 @@ const trademark_module_1 = require("./trademarks/trademark.module");
 const user_module_1 = require("./users/user.module");
 const dotenv = require("dotenv");
 const company_module_1 = require("./company/company.module");
+const url_module_1 = require("./url/url.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -25,7 +26,8 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             user_module_1.UserModule,
             trademark_module_1.TrademarkModule,
-            company_module_1.CompanyModule
+            company_module_1.CompanyModule,
+            url_module_1.UrlModule
         ],
     })
 ], AppModule);

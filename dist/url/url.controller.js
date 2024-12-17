@@ -12,58 +12,58 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TrademarkController = void 0;
+exports.UrlController = void 0;
 const common_1 = require("@nestjs/common");
-const trademark_service_1 = require("./trademark.service");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const url_service_1 = require("./url.service");
 const get_user_decorator_1 = require("../auth/get-user.decorator");
 const user_service_1 = require("../users/user.service");
-let TrademarkController = class TrademarkController {
-    constructor(trademarkService, userService) {
-        this.trademarkService = trademarkService;
+let UrlController = class UrlController {
+    constructor(urlService, userService) {
+        this.urlService = urlService;
         this.userService = userService;
     }
-    async createTrademark(body, user) {
-        const owner = await this.userService.getCompanyByUser(user.userId);
-        return this.trademarkService.createTrademark({ ...body, owner: owner['_id'].toString() });
-    }
-    async getTrademarks(user) {
+    async getUrls(user) {
         const company = await this.userService.getCompanyByUser(user.userId);
-        return this.trademarkService.getTrademarksByCompany(company['_id'].toString());
+        return this.urlService.getUrls(company['_id'].toString());
     }
-    async getTrademarkById(id) {
-        return this.trademarkService.getTrademarkById(id);
+    async getUrlById(id) {
+        return this.urlService.getUrlById(id);
     }
-    async updateTrademark(id, body) {
-        return this.trademarkService.updateTrademark(id, body);
+    async createUrl(data, user) {
+        const owner = await this.userService.getCompanyByUser(user.userId);
+        return this.urlService.createUrl({ ...data, owner: owner['_id'].toString() });
     }
-    async deleteTrademark(id) {
-        return this.trademarkService.deleteTrademark(id);
+    async updateUrl(id, data) {
+        return this.urlService.updateUrl(id, data);
+    }
+    async deleteUrl(id) {
+        return this.urlService.deleteUrl(id);
     }
 };
-exports.TrademarkController = TrademarkController;
-__decorate([
-    (0, common_1.Post)('create'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, get_user_decorator_1.GetUser)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], TrademarkController.prototype, "createTrademark", null);
+exports.UrlController = UrlController;
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], TrademarkController.prototype, "getTrademarks", null);
+], UrlController.prototype, "getUrls", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], TrademarkController.prototype, "getTrademarkById", null);
+], UrlController.prototype, "getUrlById", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, get_user_decorator_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UrlController.prototype, "createUrl", null);
 __decorate([
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -71,17 +71,18 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
-], TrademarkController.prototype, "updateTrademark", null);
+], UrlController.prototype, "updateUrl", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], TrademarkController.prototype, "deleteTrademark", null);
-exports.TrademarkController = TrademarkController = __decorate([
-    (0, common_1.Controller)('trademarks'),
+], UrlController.prototype, "deleteUrl", null);
+exports.UrlController = UrlController = __decorate([
+    (0, common_1.Controller)('url'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    __metadata("design:paramtypes", [trademark_service_1.TrademarkService, user_service_1.UserService])
-], TrademarkController);
-//# sourceMappingURL=trademark.controller.js.map
+    __metadata("design:paramtypes", [url_service_1.UrlService,
+        user_service_1.UserService])
+], UrlController);
+//# sourceMappingURL=url.controller.js.map

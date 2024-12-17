@@ -1,7 +1,9 @@
 import { TrademarkService } from './trademark.service';
+import { UserService } from 'src/users/user.service';
 export declare class TrademarkController {
     private trademarkService;
-    constructor(trademarkService: TrademarkService);
+    private userService;
+    constructor(trademarkService: TrademarkService, userService: UserService);
     createTrademark(body: {
         name: string;
         code: string;

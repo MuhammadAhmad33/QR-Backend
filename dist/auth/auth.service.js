@@ -54,6 +54,9 @@ let AuthService = class AuthService {
             if (!user || !(await bcrypt.compare(password, user.password))) {
                 throw new common_1.UnauthorizedException('Invalid email or password');
             }
+            if (!user.isActive) {
+                throw new common_1.UnauthorizedException('User is not active');
+            }
             const payload = { email: user.email, sub: user._id };
             const token = this.jwtService.sign(payload);
             return { accessToken: token };
