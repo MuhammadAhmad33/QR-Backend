@@ -81,4 +81,19 @@ export class LabelService {
     }
     return deletedLabel;
   }
+
+  async findByBrand(brandId: string): Promise<Label[]> {
+    if (!Types.ObjectId.isValid(brandId)) {
+      throw new NotFoundException('Invalid brand ID');
+    }
+
+    const labels = await this.labelModel.find({ brand: new Types.ObjectId(brandId) }).populate('brand').exec();
+    
+    if (!labels || labels.length === 0) {
+      throw new NotFoundException(`No labels found for brand with ID ${brandId}`);
+    }
+
+    return labels;
+  }
+  
 }

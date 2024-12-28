@@ -20,4 +20,5 @@ export declare class LabelService {
         brand?: string;
     }): Promise<Label>;
     remove(id: string): Promise<Label>;
+    findByBrand(brandId: string): Promise<Label[]>;
 }

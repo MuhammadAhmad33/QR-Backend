@@ -8,4 +8,5 @@ export declare class LabelController {
     findOne(id: string): Promise<Label>;
     update(id: string, updateLabelDto: any, image: Express.Multer.File): Promise<Label>;
     remove(id: string): Promise<Label>;
+    findByBrand(brandId: string): Promise<Label[]>;
 }
