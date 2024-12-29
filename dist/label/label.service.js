@@ -73,6 +73,16 @@ let LabelService = class LabelService {
         }
         return deletedLabel;
     }
+    async findByBrand(brandId) {
+        if (!mongoose_2.Types.ObjectId.isValid(brandId)) {
+            throw new common_1.NotFoundException('Invalid brand ID');
+        }
+        const labels = await this.labelModel.find({ brand: new mongoose_2.Types.ObjectId(brandId) }).populate('brand').exec();
+        if (!labels || labels.length === 0) {
+            throw new common_1.NotFoundException(`No labels found for brand with ID ${brandId}`);
+        }
+        return labels;
+    }
 };
 exports.LabelService = LabelService;
 exports.LabelService = LabelService = __decorate([

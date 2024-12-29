@@ -53,4 +53,10 @@ export class LabelController {
   remove(@Param('id') id: string): Promise<Label> {
     return this.labelService.remove(id);
   }
+
+  @Get('brand/:brandId')
+  async findByBrand(@Param('brandId') brandId: string): Promise<Label[]> {
+    return this.labelService.findByBrand(brandId);
+  }
+  
 }
