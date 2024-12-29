@@ -3,6 +3,7 @@ import { User } from './user.schema';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
+    createUser(userData: Partial<User>, req: any): Promise<User>;
     create(userData: Partial<User>, currentUser: any): Promise<User>;
     getUsers(user: any): Promise<User[]>;
     getUser(userId: string, currentUser: any): Promise<User>;
