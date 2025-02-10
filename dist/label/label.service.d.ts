@@ -8,7 +8,8 @@ export declare class LabelService {
     create(createLabelDto: {
         name: string;
         description: string;
-        image: any;
+        imageBuffer: Buffer;
+        imageOriginalname: string;
         brand: string;
     }): Promise<Label>;
     findAll(): Promise<Label[]>;

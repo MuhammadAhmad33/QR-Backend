@@ -27,7 +27,7 @@ let LabelService = class LabelService {
         if (!mongoose_2.Types.ObjectId.isValid(createLabelDto.brand)) {
             throw new common_1.NotFoundException('Invalid brand ID');
         }
-        const uploadedImage = await this.cloudinaryService.uploadImage(createLabelDto.image.buffer, createLabelDto.image.originalname);
+        const uploadedImage = await this.cloudinaryService.uploadImage(createLabelDto.imageBuffer, createLabelDto.imageOriginalname);
         const createdLabel = new this.labelModel({
             ...createLabelDto,
             brand: new mongoose_2.Types.ObjectId(createLabelDto.brand),

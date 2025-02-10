@@ -13,22 +13,22 @@ export class LabelService {
     private readonly cloudinaryService: CloudinaryService, // Inject Cloudinary service
   ) {}
 
-  async create(createLabelDto: { name: string; description: string; image: any; brand: string }): Promise<Label> {
+  async create(createLabelDto: { name: string; description: string; imageBuffer: Buffer; imageOriginalname: string; brand: string }): Promise<Label> {
     if (!Types.ObjectId.isValid(createLabelDto.brand)) {
       throw new NotFoundException('Invalid brand ID');
     }
-
-    // Upload image to Cloudinary and get the URL
-    const uploadedImage = await this.cloudinaryService.uploadImage(createLabelDto.image.buffer, createLabelDto.image.originalname);
-
+  
+    const uploadedImage = await this.cloudinaryService.uploadImage(createLabelDto.imageBuffer, createLabelDto.imageOriginalname);
+  
     const createdLabel = new this.labelModel({
       ...createLabelDto,
       brand: new Types.ObjectId(createLabelDto.brand),
-      image: uploadedImage.secure_url, // Save Cloudinary URL in the DB
+      image: uploadedImage.secure_url, // Store Cloudinary URL
     });
-
+  
     return createdLabel.save();
   }
+  
 
   async findAll(): Promise<Label[]> {
     return this.labelModel.find().populate('brand').exec();

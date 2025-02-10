@@ -22,8 +22,16 @@ let LabelController = class LabelController {
         this.labelService = labelService;
     }
     async create(createLabelDto, image) {
+        console.log('Uploaded Image:', image);
+        if (!image) {
+            throw new common_1.BadRequestException('No image file provided');
+        }
         createLabelDto.image = image;
-        return this.labelService.create(createLabelDto);
+        return this.labelService.create({
+            ...createLabelDto,
+            imageBuffer: image.buffer,
+            imageOriginalname: image.originalname,
+        });
     }
     findAll() {
         return this.labelService.findAll();

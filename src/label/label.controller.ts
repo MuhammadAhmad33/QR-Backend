@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, UseGuards, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { LabelService } from './label.service';
 import { Label } from './label.schema';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -18,8 +18,17 @@ export class LabelController {
     @Body() createLabelDto: any, 
     @UploadedFile() image: Express.Multer.File // Explicitly use the type for the uploaded file
   ): Promise<Label> {
+    console.log('Uploaded Image:', image); // Debugging line
+    if (!image) {
+      throw new BadRequestException('No image file provided');
+    }
     createLabelDto.image = image; // Pass the image to the service
-    return this.labelService.create(createLabelDto);
+
+    return this.labelService.create({
+      ...createLabelDto,
+      imageBuffer: image.buffer,
+      imageOriginalname: image.originalname,
+    });
   }
 
   // GET all labels
