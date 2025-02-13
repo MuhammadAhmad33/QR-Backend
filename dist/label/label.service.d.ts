@@ -8,18 +8,27 @@ export declare class LabelService {
     create(createLabelDto: {
         name: string;
         description: string;
+        brand: string;
+        ingredients: string[];
+        nutritionDeclaration: {
+            name: string;
+            value: string;
+        }[];
         imageBuffer: Buffer;
         imageOriginalname: string;
-        brand: string;
     }): Promise<Label>;
     findAll(): Promise<Label[]>;
     findOne(id: string): Promise<Label>;
     update(id: string, updateLabelDto: {
         name?: string;
         description?: string;
-        image?: any;
         brand?: string;
-    }): Promise<Label>;
+        ingredients?: string[];
+        nutritionDeclaration?: {
+            name: string;
+            value: string;
+        }[];
+    }, image?: Express.Multer.File): Promise<Label>;
     remove(id: string): Promise<Label>;
     findByBrand(brandId: string): Promise<Label[]>;
 }

@@ -9,10 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LabelSchema = exports.Label = void 0;
+exports.LabelSchema = exports.Label = exports.NutritionElement = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const trademark_schema_1 = require("../trademarks/trademark.schema");
+let NutritionElement = class NutritionElement {
+};
+exports.NutritionElement = NutritionElement;
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], NutritionElement.prototype, "name", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], NutritionElement.prototype, "value", void 0);
+exports.NutritionElement = NutritionElement = __decorate([
+    (0, mongoose_1.Schema)()
+], NutritionElement);
+const NutritionElementSchema = mongoose_1.SchemaFactory.createForClass(NutritionElement);
 let Label = class Label {
 };
 exports.Label = Label;
@@ -25,13 +40,21 @@ __decorate([
     __metadata("design:type", String)
 ], Label.prototype, "description", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", String)
 ], Label.prototype, "image", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Brand', required: true }),
     __metadata("design:type", trademark_schema_1.Brand)
 ], Label.prototype, "brand", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [String], required: true }),
+    __metadata("design:type", Array)
+], Label.prototype, "ingredients", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [NutritionElementSchema], required: true }),
+    __metadata("design:type", Array)
+], Label.prototype, "nutritionDeclaration", void 0);
 exports.Label = Label = __decorate([
     (0, mongoose_1.Schema)()
 ], Label);

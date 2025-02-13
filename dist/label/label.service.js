@@ -45,13 +45,13 @@ let LabelService = class LabelService {
         }
         return label;
     }
-    async update(id, updateLabelDto) {
+    async update(id, updateLabelDto, image) {
         if (updateLabelDto.brand && !mongoose_2.Types.ObjectId.isValid(updateLabelDto.brand)) {
             throw new common_1.NotFoundException('Invalid brand ID');
         }
-        let imageUrl = undefined;
-        if (updateLabelDto.image) {
-            const uploadedImage = await this.cloudinaryService.uploadImage(updateLabelDto.image.buffer, updateLabelDto.image.originalname);
+        let imageUrl;
+        if (image) {
+            const uploadedImage = await this.cloudinaryService.uploadImage(image.buffer, image.originalname);
             imageUrl = uploadedImage.secure_url;
         }
         const updatedLabel = await this.labelModel

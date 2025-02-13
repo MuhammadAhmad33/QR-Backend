@@ -22,11 +22,9 @@ let LabelController = class LabelController {
         this.labelService = labelService;
     }
     async create(createLabelDto, image) {
-        console.log('Uploaded Image:', image);
         if (!image) {
             throw new common_1.BadRequestException('No image file provided');
         }
-        createLabelDto.image = image;
         return this.labelService.create({
             ...createLabelDto,
             imageBuffer: image.buffer,
@@ -40,15 +38,12 @@ let LabelController = class LabelController {
         return this.labelService.findOne(id);
     }
     async update(id, updateLabelDto, image) {
-        if (image) {
-            updateLabelDto.image = image;
-        }
-        return this.labelService.update(id, updateLabelDto);
+        return this.labelService.update(id, updateLabelDto, image);
     }
     remove(id) {
         return this.labelService.remove(id);
     }
-    async findByBrand(brandId) {
+    findByBrand(brandId) {
         return this.labelService.findByBrand(brandId);
     }
 };
