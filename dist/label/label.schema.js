@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:type", trademark_schema_1.Brand)
 ], Label.prototype, "brand", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [String], required: true }),
+    (0, mongoose_1.Prop)({ type: [String], required: false }),
     __metadata("design:type", Array)
 ], Label.prototype, "ingredients", void 0);
 __decorate([

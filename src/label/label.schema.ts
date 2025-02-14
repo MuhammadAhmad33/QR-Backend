@@ -29,7 +29,7 @@ export class Label {
   @Prop({ type: Types.ObjectId, ref: 'Brand', required: true })
   brand: Brand;
 
-  @Prop({ type: [String], required: true }) // Ingredients array
+  @Prop({ type: [String], required: false }) // Ingredients array
   ingredients: string[];
 
   @Prop({ type: [NutritionElementSchema], required: true }) // Array of custom nutrition elements
