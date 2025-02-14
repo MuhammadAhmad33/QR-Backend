@@ -17,23 +17,30 @@ export class LabelService {
     brand: string; 
     ingredients: string[];
     nutritionDeclaration: { name: string; value: string }[];
-    imageBuffer: Buffer; 
-    imageOriginalname: string;
+    imageBuffer?: Buffer | null; 
+    imageOriginalname?: string | null;
   }): Promise<Label> {
     if (!Types.ObjectId.isValid(createLabelDto.brand)) {
       throw new NotFoundException('Invalid brand ID');
     }
-
-    const uploadedImage = await this.cloudinaryService.uploadImage(createLabelDto.imageBuffer, createLabelDto.imageOriginalname);
-
+  
+    let imageUrl = null;
+    if (createLabelDto.imageBuffer && createLabelDto.imageOriginalname) {
+      const uploadedImage = await this.cloudinaryService.uploadImage(
+        createLabelDto.imageBuffer, 
+        createLabelDto.imageOriginalname
+      );
+      imageUrl = uploadedImage.secure_url;
+    }
+  
     const createdLabel = new this.labelModel({
       ...createLabelDto,
       brand: new Types.ObjectId(createLabelDto.brand),
-      image: uploadedImage.secure_url,
+      image: imageUrl, // Set image to null if not uploaded
     });
-
     return createdLabel.save();
   }
+  
 
   async findAll(): Promise<Label[]> {
     return this.labelModel.find().populate('brand').exec();

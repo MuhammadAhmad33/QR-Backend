@@ -15,16 +15,12 @@ export class LabelController {
     @Body() createLabelDto: any,
     @UploadedFile() image?: Express.Multer.File
   ): Promise<Label> {
-    if (!image) {
-      throw new BadRequestException('No image file provided');
-    }
-
     return this.labelService.create({
       ...createLabelDto,
-      imageBuffer: image.buffer,
-      imageOriginalname: image.originalname,
+      imageBuffer: image ? image.buffer : null,
+      imageOriginalname: image ? image.originalname : null,
     });
-  }
+  }  
 
   @Get()
   findAll(): Promise<Label[]> {

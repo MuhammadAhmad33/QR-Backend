@@ -27,11 +27,15 @@ let LabelService = class LabelService {
         if (!mongoose_2.Types.ObjectId.isValid(createLabelDto.brand)) {
             throw new common_1.NotFoundException('Invalid brand ID');
         }
-        const uploadedImage = await this.cloudinaryService.uploadImage(createLabelDto.imageBuffer, createLabelDto.imageOriginalname);
+        let imageUrl = null;
+        if (createLabelDto.imageBuffer && createLabelDto.imageOriginalname) {
+            const uploadedImage = await this.cloudinaryService.uploadImage(createLabelDto.imageBuffer, createLabelDto.imageOriginalname);
+            imageUrl = uploadedImage.secure_url;
+        }
         const createdLabel = new this.labelModel({
             ...createLabelDto,
             brand: new mongoose_2.Types.ObjectId(createLabelDto.brand),
-            image: uploadedImage.secure_url,
+            image: imageUrl,
         });
         return createdLabel.save();
     }

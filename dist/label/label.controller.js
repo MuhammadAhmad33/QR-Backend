@@ -22,13 +22,10 @@ let LabelController = class LabelController {
         this.labelService = labelService;
     }
     async create(createLabelDto, image) {
-        if (!image) {
-            throw new common_1.BadRequestException('No image file provided');
-        }
         return this.labelService.create({
             ...createLabelDto,
-            imageBuffer: image.buffer,
-            imageOriginalname: image.originalname,
+            imageBuffer: image ? image.buffer : null,
+            imageOriginalname: image ? image.originalname : null,
         });
     }
     findAll() {

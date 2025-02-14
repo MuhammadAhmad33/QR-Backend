@@ -14,8 +14,8 @@ export declare class LabelService {
             name: string;
             value: string;
         }[];
-        imageBuffer: Buffer;
-        imageOriginalname: string;
+        imageBuffer?: Buffer | null;
+        imageOriginalname?: string | null;
     }): Promise<Label>;
     findAll(): Promise<Label[]>;
     findOne(id: string): Promise<Label>;
