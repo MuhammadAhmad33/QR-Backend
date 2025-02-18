@@ -12,6 +12,7 @@ export declare class Label {
     brand: Brand;
     ingredients: string[];
     nutritionDeclaration: NutritionElement[];
+    deletedAt: Date | null;
 }
 export declare const LabelSchema: import("mongoose").Schema<Label, import("mongoose").Model<Label, any, any, any, Document<unknown, any, Label> & Label & {
     _id: Types.ObjectId;

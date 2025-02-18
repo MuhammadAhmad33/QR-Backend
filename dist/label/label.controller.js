@@ -40,6 +40,9 @@ let LabelController = class LabelController {
     remove(id) {
         return this.labelService.remove(id);
     }
+    async restore(id) {
+        return this.labelService.restore(id);
+    }
     findByBrand(brandId) {
         return this.labelService.findByBrand(brandId);
     }
@@ -84,6 +87,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], LabelController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Patch)('restore/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], LabelController.prototype, "restore", null);
 __decorate([
     (0, common_1.Get)('brand/:brandId'),
     __param(0, (0, common_1.Param)('brandId')),

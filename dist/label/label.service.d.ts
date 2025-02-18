@@ -30,5 +30,6 @@ export declare class LabelService {
         }[];
     }, image?: Express.Multer.File): Promise<Label>;
     remove(id: string): Promise<Label>;
+    restore(id: string): Promise<Label>;
     findByBrand(brandId: string): Promise<Label[]>;
 }

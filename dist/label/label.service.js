@@ -40,7 +40,7 @@ let LabelService = class LabelService {
         return createdLabel.save();
     }
     async findAll() {
-        return this.labelModel.find().populate('brand').exec();
+        return this.labelModel.find({ deletedAt: null }).populate('brand').exec();
     }
     async findOne(id) {
         const label = await this.labelModel.findById(id).populate('brand').exec();
@@ -71,17 +71,24 @@ let LabelService = class LabelService {
         return updatedLabel;
     }
     async remove(id) {
-        const deletedLabel = await this.labelModel.findByIdAndDelete(id);
+        const deletedLabel = await this.labelModel.findByIdAndUpdate(id, { deletedAt: new Date() }, { new: true });
         if (!deletedLabel) {
             throw new common_1.NotFoundException(`Label with ID ${id} not found`);
         }
         return deletedLabel;
     }
+    async restore(id) {
+        const restoredLabel = await this.labelModel.findByIdAndUpdate(id, { deletedAt: null }, { new: true });
+        if (!restoredLabel) {
+            throw new common_1.NotFoundException(`Label with ID ${id} not found or not deleted`);
+        }
+        return restoredLabel;
+    }
     async findByBrand(brandId) {
         if (!mongoose_2.Types.ObjectId.isValid(brandId)) {
             throw new common_1.NotFoundException('Invalid brand ID');
         }
-        const labels = await this.labelModel.find({ brand: new mongoose_2.Types.ObjectId(brandId) }).populate('brand').exec();
+        const labels = await this.labelModel.find({ brand: new mongoose_2.Types.ObjectId(brandId), deletedAt: null }).populate('brand').exec();
         if (!labels || labels.length === 0) {
             throw new common_1.NotFoundException(`No labels found for brand with ID ${brandId}`);
         }

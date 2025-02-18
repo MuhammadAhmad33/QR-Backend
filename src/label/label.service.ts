@@ -43,7 +43,9 @@ export class LabelService {
   
 
   async findAll(): Promise<Label[]> {
-    return this.labelModel.find().populate('brand').exec();
+    return this.labelModel.find(
+      { deletedAt: null }, 
+    ).populate('brand').exec();
   }
 
   async findOne(id: string): Promise<Label> {
@@ -94,19 +96,41 @@ export class LabelService {
   }
 
   async remove(id: string): Promise<Label> {
-    const deletedLabel = await this.labelModel.findByIdAndDelete(id);
+    const deletedLabel = await this.labelModel.findByIdAndUpdate(
+      id,
+      { deletedAt: new Date() },  // Soft delete
+      { new: true }
+    );
+  
     if (!deletedLabel) {
       throw new NotFoundException(`Label with ID ${id} not found`);
     }
+  
     return deletedLabel;
   }
+
+  async restore(id: string): Promise<Label> {
+    const restoredLabel = await this.labelModel.findByIdAndUpdate(
+      id,
+      { deletedAt: null }, // Restore label
+      { new: true }
+    );
+  
+    if (!restoredLabel) {
+      throw new NotFoundException(`Label with ID ${id} not found or not deleted`);
+    }
+  
+    return restoredLabel;
+  }
+  
+  
 
   async findByBrand(brandId: string): Promise<Label[]> {
     if (!Types.ObjectId.isValid(brandId)) {
       throw new NotFoundException('Invalid brand ID');
     }
 
-    const labels = await this.labelModel.find({ brand: new Types.ObjectId(brandId) }).populate('brand').exec();
+    const labels = await this.labelModel.find({ brand: new Types.ObjectId(brandId),deletedAt: null }).populate('brand').exec();
 
     if (!labels || labels.length === 0) {
       throw new NotFoundException(`No labels found for brand with ID ${brandId}`);

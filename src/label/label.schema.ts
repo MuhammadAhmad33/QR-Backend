@@ -34,6 +34,9 @@ export class Label {
 
   @Prop({ type: [NutritionElementSchema], required: true }) // Array of custom nutrition elements
   nutritionDeclaration: NutritionElement[];
+
+  @Prop({ default: null })  // Soft delete field
+  deletedAt: Date | null;
 }
 
 export const LabelSchema = SchemaFactory.createForClass(Label);

@@ -55,6 +55,10 @@ __decorate([
     (0, mongoose_1.Prop)({ type: [NutritionElementSchema], required: true }),
     __metadata("design:type", Array)
 ], Label.prototype, "nutritionDeclaration", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: null }),
+    __metadata("design:type", Date)
+], Label.prototype, "deletedAt", void 0);
 exports.Label = Label = __decorate([
     (0, mongoose_1.Schema)()
 ], Label);
