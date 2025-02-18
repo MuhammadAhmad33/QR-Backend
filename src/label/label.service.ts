@@ -138,5 +138,23 @@ export class LabelService {
 
     return labels;
   }
+
+  async findDeletedByBrand(brandId: string): Promise<Label[]> {
+    if (!Types.ObjectId.isValid(brandId)) {
+      throw new NotFoundException('Invalid brand ID');
+    }
+  
+    const deletedLabels = await this.labelModel
+      .find({ brand: new Types.ObjectId(brandId), deletedAt: { $ne: null } })
+      .populate('brand')
+      .exec();
+  
+    if (!deletedLabels || deletedLabels.length === 0) {
+      throw new NotFoundException(`No soft-deleted labels found for brand with ID ${brandId}`);
+    }
+  
+    return deletedLabels;
+  }
+  
   
 }

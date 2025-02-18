@@ -57,4 +57,10 @@ async restore(@Param('id') id: string): Promise<Label> {
   findByBrand(@Param('brandId') brandId: string): Promise<Label[]> {
     return this.labelService.findByBrand(brandId);
   }
+
+  @Get('brand/:brandId/deleted')
+async findDeletedByBrand(@Param('brandId') brandId: string): Promise<Label[]> {
+  return this.labelService.findDeletedByBrand(brandId);
+}
+
 }

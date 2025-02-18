@@ -32,4 +32,5 @@ export declare class LabelService {
     remove(id: string): Promise<Label>;
     restore(id: string): Promise<Label>;
     findByBrand(brandId: string): Promise<Label[]>;
+    findDeletedByBrand(brandId: string): Promise<Label[]>;
 }

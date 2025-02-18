@@ -10,4 +10,5 @@ export declare class LabelController {
     remove(id: string): Promise<Label>;
     restore(id: string): Promise<Label>;
     findByBrand(brandId: string): Promise<Label[]>;
+    findDeletedByBrand(brandId: string): Promise<Label[]>;
 }

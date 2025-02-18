@@ -46,6 +46,9 @@ let LabelController = class LabelController {
     findByBrand(brandId) {
         return this.labelService.findByBrand(brandId);
     }
+    async findDeletedByBrand(brandId) {
+        return this.labelService.findDeletedByBrand(brandId);
+    }
 };
 exports.LabelController = LabelController;
 __decorate([
@@ -101,6 +104,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], LabelController.prototype, "findByBrand", null);
+__decorate([
+    (0, common_1.Get)('brand/:brandId/deleted'),
+    __param(0, (0, common_1.Param)('brandId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], LabelController.prototype, "findDeletedByBrand", null);
 exports.LabelController = LabelController = __decorate([
     (0, common_1.Controller)('labels'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
